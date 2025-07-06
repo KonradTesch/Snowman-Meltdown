@@ -37,6 +37,16 @@ def get_random_word():
     """Selects a random word from the list."""
     return WORDS[random.randint(0, len(WORDS) - 1)]
 
+def is_game_over(mistakes, guessed_letters, secret_word):
+    if mistakes >= 3:
+        return True
+
+    for char in secret_word:
+        if char not in guessed_letters:
+            return False
+
+    return True
+
 
 def display_game_state(mistakes, secret_word, guessed_letters):
     """
@@ -62,13 +72,17 @@ def play_game():
 
     mistakes = 0
     guessed_letters = []
-    # TODO: Build your game loop here.
 
-    display_game_state(mistakes, secret_word, guessed_letters)
-    # For now, simply prompt the user once:
-    guess = input("Guess a letter: ").lower()
-    guessed_letters.append(guess)
-    print("You guessed:", guess)
+    while not is_game_over(mistakes, guessed_letters, secret_word):
+        display_game_state(mistakes, secret_word, guessed_letters)
+        # For now, simply prompt the user once:
+        guess = input("Guess a letter: ").lower()
+        guessed_letters.append(guess)
+        if guess not in secret_word:
+            mistakes += 1
+        print("You guessed:", guess)
+
+
 
 
 if __name__ == "__main__":
