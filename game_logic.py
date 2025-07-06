@@ -26,9 +26,6 @@ def get_user_guess(guessed_letters):
         print("Wrong input. Please enter a single letter.\n")
 
 
-
-
-
 def is_game_over(mistakes, guessed_letters, secret_word):
     """Check if one of the end conditions is reached"""
     if mistakes >= 3:
@@ -98,7 +95,6 @@ def ask_for_replay():
             return True
         else:
             return False
-
 
 
 def play_game():
