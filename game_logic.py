@@ -10,6 +10,25 @@ def get_random_word():
     return WORDS[random.randint(0, len(WORDS) - 1)]
 
 
+def get_user_guess(guessed_letters):
+    """Gets user guess input."""
+
+    while True:
+        guess = input("Guess a letter: ").lower()
+
+        if guess in guessed_letters:
+            print("You already guessed that letter")
+            continue
+
+        if len(guess) == 1 and guess.isalpha():
+            return guess
+
+        print("Wrong input. Please enter a single letter.\n")
+
+
+
+
+
 def is_game_over(mistakes, guessed_letters, secret_word):
     if mistakes >= 3:
         return True
@@ -70,7 +89,7 @@ def play_game():
     while not is_game_over(mistakes, guessed_letters, secret_word):
         display_game_state(mistakes, secret_word, guessed_letters)
         # For now, simply prompt the user once:
-        guess = input("Guess a letter: ").lower()
+        guess = get_user_guess(guessed_letters)
         guessed_letters.append(guess)
         if guess not in secret_word:
             mistakes += 1
