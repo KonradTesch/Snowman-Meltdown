@@ -30,13 +30,17 @@ def get_user_guess(guessed_letters):
 
 
 def is_game_over(mistakes, guessed_letters, secret_word):
+    """Check if one of the end conditions is reached"""
     if mistakes >= 3:
+        #too many mistakes
         return True
 
     for char in secret_word:
         if char not in guessed_letters:
+            #the player hasn't guessed all letters
             return False
 
+    #The player has guessed all letters
     return True
 
 
@@ -76,6 +80,7 @@ def display_game_state(mistakes, secret_word, guessed_letters):
             displayed_word += char + " "
         else:
             displayed_word += "_ "
+
     print(f"Word: {displayed_word}\n")
 
 
@@ -106,11 +111,12 @@ def play_game():
 
         while not is_game_over(mistakes, guessed_letters, secret_word):
             display_game_state(mistakes, secret_word, guessed_letters)
-            # For now, simply prompt the user once:
             guess = get_user_guess(guessed_letters)
+
             guessed_letters.append(guess)
             if guess not in secret_word:
                 mistakes += 1
+
             print("You guessed:", guess)
 
         if is_game_won(mistakes):
