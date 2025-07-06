@@ -79,26 +79,47 @@ def display_game_state(mistakes, secret_word, guessed_letters):
     print(f"Word: {displayed_word}\n")
 
 
+def ask_for_replay():
+    """
+    Asks user to replay the game.
+    :return: True if the player select yes.
+    """
+    while True:
+        user_input = input("\nDo you want to play again? [Y/N] ")
+
+        if user_input.lower() not in ["y", "n"]:
+            print("Invalid input. Please try again.")
+        elif user_input.lower() == "y":
+            return True
+        else:
+            return False
+
+
+
 def play_game():
     secret_word = get_random_word()
     print("Welcome to Snowman Meltdown!")
 
-    mistakes = 0
-    guessed_letters = []
+    while True:
+        mistakes = 0
+        guessed_letters = []
 
-    while not is_game_over(mistakes, guessed_letters, secret_word):
-        display_game_state(mistakes, secret_word, guessed_letters)
-        # For now, simply prompt the user once:
-        guess = get_user_guess(guessed_letters)
-        guessed_letters.append(guess)
-        if guess not in secret_word:
-            mistakes += 1
-        print("You guessed:", guess)
+        while not is_game_over(mistakes, guessed_letters, secret_word):
+            display_game_state(mistakes, secret_word, guessed_letters)
+            # For now, simply prompt the user once:
+            guess = get_user_guess(guessed_letters)
+            guessed_letters.append(guess)
+            if guess not in secret_word:
+                mistakes += 1
+            print("You guessed:", guess)
 
-    if is_game_won(mistakes):
-        display_win(secret_word)
-    else:
-        display_game_over(secret_word)
+        if is_game_won(mistakes):
+            display_win(secret_word)
+        else:
+            display_game_over(secret_word)
+
+        if not ask_for_replay():
+            break
 
 
 if __name__ == "__main__":
